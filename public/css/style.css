@@ -43,6 +43,11 @@
 }
 
 
+.info-links {
+    color: inherit;
+    text-decoration: none;
+}
+
 
 .f-info-socials i {
     font-size: 1.4rem;
