@@ -11,5 +11,5 @@
 * EJS Mate
 * Joi
 ---
-> First install, `npm i` in the **Terminal** to Download the Requied modules/packages
+> First install, `npm i` in the **Terminal** to Download the Requied modules/packages, 
 > To open in **Terminal** `node app.js` 
