@@ -14,9 +14,10 @@
 - method-Override
 - EJS Mate
 - Joi
+- multer 
 
 ---
 
 > First install, `npm i` in the **Terminal** to Download the required modules/packages,
 
-> To VIEW SITE-- **Terminal** `node app.js`
+> To VIEW SITE-- in **Terminal** `node app.js`
