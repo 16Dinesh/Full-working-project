@@ -57,6 +57,8 @@ function checkFileType(file, cb) {
     }
 }
 
+
+// home page
 app.get("/", (req, res) => {
     res.render("listings/home.ejs");
 });

@@ -1,23 +1,33 @@
 ## _Trek-To-DO_ Listing WebSite
 
-> FrameWork & DataBase
+> **FrameWork & DataBase**
 
 - Node
 - MongoDB
 
 ---
 
-> Modules / Packages used
+> **Modules / Packages used**
 
 - Express
 - ejs
 - method-Override
 - EJS Mate
 - Joi
-- multer 
 
 ---
 
-> First install, `npm i` in the **Terminal** to Download the required modules/packages,
+# Hotel Listing Website Setup Instructions
 
-> To VIEW SITE-- in **Terminal** `node app.js`
+## Installation
+
+1. First, navigate to your project directory in the terminal.
+2. Run `npm install` to download all required modules and packages.
+
+## Running the Application
+
+1. After installation, execute `node app.js` in the terminal to start the server.
+
+## Viewing the Website
+
+1. Open your web browser and go to [http://localhost:8080/](http://localhost:8080/) to view the site.
