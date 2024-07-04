@@ -9,6 +9,7 @@
 
 > **Modules / Packages used**
 
+- BootStrap
 - Express
 - ejs
 - method-Override
@@ -17,7 +18,7 @@
 
 ---
 
-# Hotel Listing Website Setup Instructions
+# Website Setup Instructions
 
 ## Installation
 
