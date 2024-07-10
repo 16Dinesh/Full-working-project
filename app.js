@@ -5,8 +5,11 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require('ejs-mate');
 const ExpressError = require("./utils/ExpressError.js");
-const session = require("express-session")
+const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const localStrategy = require("passport-local");
+const User = require("./models/user.js");
 
 // Routers
 const listingsRouter = require('./routes/listings.js');
@@ -49,6 +52,10 @@ app.get("/", (req, res) => {
 app.use(session(sessionOptions));
 app.use(flash());
 
+//passport midddleware initialize
+app.use(passport.initialize());
+
+// flash msg middleware
 app.use((req, res, next) => {
     res.locals.success = req.flash("success")
     res.locals.Error = req.flash("Error")
