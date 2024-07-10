@@ -63,6 +63,10 @@ router.get("/new", (req, res) => {
 router.get("/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id).populate("reviews");
+    if(!listing) {
+        req.flash("Error", "Listing Don't Exist - Error 404");
+        res.redirect("/listings");
+    }
     res.render("listings/show.ejs", { listing });
 }));
 
@@ -73,8 +77,8 @@ router.post("/", upload, validateListing, wrapAsync(async (req, res, next) => {
     if (req.file) {
         newListing.image = `/uploads/${req.file.filename}`;
     }
-
     await newListing.save();
+    req.flash("success", "New Listing Created")
     res.redirect("listings");
 }));
 
@@ -82,6 +86,10 @@ router.post("/", upload, validateListing, wrapAsync(async (req, res, next) => {
 router.get("/:id/edit", wrapAsync(async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
+    if(!listing) {
+        req.flash("Error", "Listing Link does not Exist - Error 404");
+        res.redirect("/listings");
+    }
     res.render("listings/edit.ejs", { listing });
 }));
 
@@ -97,6 +105,7 @@ router.put("/:id", upload, validateListing, wrapAsync(async (req, res) => {
     }
 
     await listing.save();
+    req.flash("success", "Listing Updated")
     res.redirect(`/listings/${id}`);
 }));
 
@@ -105,7 +114,8 @@ router.put("/:id", upload, validateListing, wrapAsync(async (req, res) => {
 router.delete("/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
-    console.log(deletedListing);
+    //console.log(deletedListing);
+    req.flash("success", "Listing Deleted")
     res.redirect("/listings");
 }));
 

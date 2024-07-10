@@ -5,6 +5,8 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require('ejs-mate');
 const ExpressError = require("./utils/ExpressError.js");
+const session = require("express-session")
+const flash = require("connect-flash");
 
 // Routers
 const listingsRouter = require('./routes/listings.js');
@@ -27,11 +29,32 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
+// sessions for Login
+const sessionOptions = {
+    secret: "CeaservsBrutus",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires : Date.now() + 1000 * 60 * 60 * 24 * 7,  //1000 -> millsec, 60 -> sec, 60 -> min, 24 -> hours, 7 -> week
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        httpOnly: true
+    },
+};
+
 // home page
 app.get("/", (req, res) => {
     res.render("listings/home.ejs");
 });
 
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success")
+    res.locals.Error = req.flash("Error")
+    //console.log(res.locals.success);
+    next();
+})
 
 // Routes
 app.use('/listings', listingsRouter);
