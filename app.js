@@ -14,8 +14,7 @@ const User = require("./models/user.js");
 // Routers
 const listingsRouter = require('./routes/listings.js');
 const reviewsRouter = require('./routes/review.js');
-const { emitWarning } = require('process');
-const userRouter = require("./routes/user.js")
+const userRouter = require("./routes/user.js");
 
 main()
     .then(() => {
@@ -24,7 +23,7 @@ main()
     .catch((err) => console.log(err));
 
 async function main() {
-    await mongoose.connect("mongodb://127.0.0.1:27017/TrekToDo")
+    await mongoose.connect("mongodb://127.0.0.1:27017/TrekToDo");
 }
 
 app.set("view engine", "ejs");
@@ -34,13 +33,13 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
-// sessions for Login
+// Sessions for Login
 const sessionOptions = {
     secret: "CeaservsBrutus",
     resave: false,
     saveUninitialized: true,
     cookie: {
-        expires : Date.now() + 1000 * 60 * 60 * 24 * 7,  //1000 -> millsec, 60 -> sec, 60 -> min, 24 -> hours, 7 -> week
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,  // 1000 ms, 60 s, 60 min, 24 hours, 7 days
         maxAge: 1000 * 60 * 60 * 24 * 7,
         httpOnly: true
     },
@@ -49,33 +48,33 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
-// Flash message middleware to set res.locals variables
-app.use((req, res, next) => {
-    res.locals.done = req.flash('done');
-    res.locals.error = req.flash('error');
-    next();
-});
-
-//passport midddleware initialize
+// Passport middleware initialization
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()))
+passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// Flash message middleware to set res.locals variables
+app.use((req, res, next) => {
+    res.locals.done = req.flash('done');
+    res.locals.error = req.flash('error');
+    res.locals.localuser = req.user || null;
+    next();
+});
 
-//demo user
-// app.get("/demouser", async(req,res)=> {
-//     let fakeUser = new User ({
-//         email : "Test@mail.com",
+// Demo user
+// app.get("/demouser", async (req, res) => {
+//     let fakeUser = new User({
+//         email: "Test@mail.com",
 //         username: "Test@123"
 //     });
-//     let newtig = await User.register(fakeUser, "Helloworld")
-//     res.send(newtig)
-// })
+//     let newtig = await User.register(fakeUser, "Helloworld");
+//     res.send(newtig);
+// });
 
-// home page
+// Home page
 app.get("/", (req, res) => {
     res.render("listings/home.ejs");
 });
@@ -83,14 +82,14 @@ app.get("/", (req, res) => {
 // Routes
 app.use('/listings', listingsRouter);
 app.use('/listings/:id/reviews', reviewsRouter);
-app.use("/", userRouter)
+app.use("/", userRouter);
 
 // Error Test
 app.all("*", (req, res, next) => {
-    next(new ExpressError(404, "Page not Found?"))
+    next(new ExpressError(404, "Page not Found?"));
 });
 
-// Error Handler 
+// Error Handler
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "SomeThing Went Wrong!" } = err;
     res.status(statusCode).render("listings/error", { err });
