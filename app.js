@@ -8,12 +8,13 @@ const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
-const localStrategy = require("passport-local");
+const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
 // Routers
 const listingsRouter = require('./routes/listings.js');
 const reviewsRouter = require('./routes/review.js');
+const { emitWarning } = require('process');
 
 main()
     .then(() => {
@@ -44,24 +45,39 @@ const sessionOptions = {
     },
 };
 
+app.use(session(sessionOptions));
+app.use(flash());
+
+// Flash message middleware to set res.locals variables
+app.use((req, res, next) => {
+    res.locals.done = req.flash('done');
+    res.locals.error = req.flash('error');
+    next();
+});
+
+//passport midddleware initialize
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()))
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+//demo user
+// app.get("/demouser", async(req,res)=> {
+//     let fakeUser = new User ({
+//         email : "Test@mail.com",
+//         username: "Test@123"
+//     });
+//     let newtig = await User.register(fakeUser, "Helloworld")
+//     res.send(newtig)
+// })
+
 // home page
 app.get("/", (req, res) => {
     res.render("listings/home.ejs");
 });
-
-app.use(session(sessionOptions));
-app.use(flash());
-
-//passport midddleware initialize
-app.use(passport.initialize());
-
-// flash msg middleware
-app.use((req, res, next) => {
-    res.locals.success = req.flash("success")
-    res.locals.Error = req.flash("Error")
-    //console.log(res.locals.success);
-    next();
-})
 
 // Routes
 app.use('/listings', listingsRouter);
