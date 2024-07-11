@@ -15,6 +15,7 @@ const User = require("./models/user.js");
 const listingsRouter = require('./routes/listings.js');
 const reviewsRouter = require('./routes/review.js');
 const { emitWarning } = require('process');
+const userRouter = require("./routes/user.js")
 
 main()
     .then(() => {
@@ -82,6 +83,7 @@ app.get("/", (req, res) => {
 // Routes
 app.use('/listings', listingsRouter);
 app.use('/listings/:id/reviews', reviewsRouter);
+app.use("/", userRouter)
 
 // Error Test
 app.all("*", (req, res, next) => {
