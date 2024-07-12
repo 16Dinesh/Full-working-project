@@ -346,6 +346,15 @@ const sampleListings = [
       location: "Costa Rica",
       country: "Costa Rica",
     },
+
+    {
+      title: 'Brutus',
+      description: 'Boy - Having a Urgent urge to do it please help him to Find a Way or he will be doing by Self',
+      image: '/uploads/image-1719722229354.jpg',
+      price: 35000,
+      location: 'Hyderabad, Telangana',
+      country: 'India',
+    }
   ];
   
   module.exports = { data: sampleListings };

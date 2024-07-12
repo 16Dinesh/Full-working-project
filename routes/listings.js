@@ -7,6 +7,7 @@ const Listing = require("../models/listing.js");
 const multer = require('multer');
 const fs = require('fs');
 const {isLoggedIn} = require("../middleware.js");
+const path = require("path");
 
 // Set up multer for file uploads
 const storage = multer.diskStorage({
@@ -64,11 +65,12 @@ router.get("/new",isLoggedIn, (req, res) => {
 // SHOW Route
 router.get("/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
-    const listing = await Listing.findById(id).populate("reviews");
+    const listing = await Listing.findById(id).populate("reviews").populate("owner");
     if(!listing) {
         req.flash("error", "Listing Don't Exist - Error 404");
         res.redirect("/listings");
     }
+    //console.log(listing);
     res.render("listings/show.ejs", { listing });
 }));
 
@@ -79,6 +81,7 @@ router.post("/", upload, validateListing, wrapAsync(async (req, res, next) => {
     if (req.file) {
         newListing.image = `/uploads/${req.file.filename}`;
     }
+    newListing.owner = req.user._id;
     await newListing.save();
     req.flash("done", "New Listing Created")
     res.redirect("listings");
