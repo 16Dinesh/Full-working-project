@@ -64,16 +64,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// Demo user
-// app.get("/demouser", async (req, res) => {
-//     let fakeUser = new User({
-//         email: "Test@mail.com",
-//         username: "Test@123"
-//     });
-//     let newtig = await User.register(fakeUser, "Helloworld");
-//     res.send(newtig);
-// });
-
 // Home page
 app.get("/", (req, res) => {
     res.render("listings/home.ejs");
@@ -100,5 +90,3 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
-
-//MVC Start
