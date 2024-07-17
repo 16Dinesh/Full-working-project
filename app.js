@@ -15,6 +15,7 @@ const User = require("./models/user.js");
 const listingsRouter = require('./routes/listings.js');
 const reviewsRouter = require('./routes/review.js');
 const userRouter = require("./routes/user.js");
+const adminRouter = require("./routes/admin.js");
 
 main()
     .then(() => {
@@ -24,7 +25,7 @@ main()
 
 async function main() {
     await mongoose.connect("mongodb://127.0.0.1:27017/TrekToDo");
-}
+};
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -73,6 +74,7 @@ app.get("/", (req, res) => {
 app.use('/listings', listingsRouter);
 app.use('/listings/:id/reviews', reviewsRouter);
 app.use("/", userRouter);
+app.use("/", adminRouter);
 
 // Error Test
 app.all("*", (req, res, next) => {

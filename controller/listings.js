@@ -7,7 +7,7 @@ module.exports.index = async (req, res) => {
 
 module.exports.renderNewForm = (req, res) => {
     //console.log(req.user);
-    res.render("listings/new.ejs");
+    res.render("listings/new.ejs", { user: req.user });
 };
 
 module.exports.showListing = async (req, res) => {
@@ -36,12 +36,16 @@ module.exports.createListing = async (req, res, next) => {
 module.exports.renderEditForm = async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
-    if(!listing) {
+    
+    if (!listing) {
         req.flash("error", "Listing Link does not Exist - Error 404");
-        res.redirect("/listings");
+        return res.redirect("/listings");
     }
-    res.render("listings/edit.ejs", { listing });
-}
+    
+    // Pass the logged-in user and allowedUserId to the view
+    res.render("listings/edit.ejs", { listing, localuser: req.user });
+};
+
 
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;

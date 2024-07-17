@@ -17,10 +17,19 @@
                     Invalid description
                 </div>
             </div>
+            <% if (localuser && localuser.isAdmin) { %>
+            <!-- Link upload -->
             <div class="mb-3">
                 <label for="image" class="form-label">Image Link</label>
                 <input name="listing[image]" placeholder="Enter image URL/Link" type="text" class="form-control">
             </div>
+            <!-- local upload -->
+            <div class="mb-3">
+                <label for="uploadImage" class="form-label">upload image</label>
+                <input type="file" name="image" class="form-control">
+            </div>
+            <% } %>
+            <!-- clould upload -->
             <div class="mb-3">
                 <label for="uploadImage" class="form-label">Upload Image</label>
                 <input type="file" name="image" class="form-control">

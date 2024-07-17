@@ -24,15 +24,25 @@ module.exports.saveRedirectUrl = (req,res,next) => {
 };
 
 // Validate Owner
-module.exports.isOwner = async(req, res, next) => {
+module.exports.isOwnerOrAdmin = async (req, res, next) => {
     let { id } = req.params;
-    let listings = await Listing.findById(id);
-    if (!listings.owner._id.equals(res.locals.localuser._id)) {
-        req.flash("error", "You Are Not The Owner")
+    let listing = await Listing.findById(id);
+    
+    // Check if the listing exists
+    if (!listing) {
+        req.flash("error", "Listing not found");
+        return res.redirect('/listings');
+    }
+    
+    // Check if the user is the owner or an admin
+    if (!listing.owner._id.equals(res.locals.localuser._id) && !res.locals.localuser.isAdmin) {
+        req.flash("error", "You Are Not The Owner");
         return res.redirect(`/listings/${id}`);
     }
+    
     next();
 };
+
 
 // validation Error Listing 
 module.exports.validateListing = (req, res, next) => {
@@ -45,24 +55,43 @@ module.exports.validateListing = (req, res, next) => {
     }
 }
 
-// validation Error Review 
-module.exports.validateReview = (req, res, next) => {
-    let { error } = reviewSchema.validate(req.body);
-    if (error) {
-        let errMsg = error.details.map((el) => el.message).join(",");
-        throw new ExpressError(400, errMsg);
-    } else {
-        next();
-    }
-}
-
-// Validation Review Author 
-module.exports.isReviewAuthor = async(req, res, next) => {
+module.exports.isReviewAuthorOrAdmin = async (req, res, next) => {
     let { id, reviewId } = req.params;
     let review = await Review.findById(reviewId);
-    if (!review.author.equals(res.locals.localuser._id)) {
+
+    // Check if the review exists
+    if (!review) {
+        req.flash("error", "Review not found");
+        return res.redirect(`/listings/${id}`);
+    }
+    
+    // Check if the user is the author or an admin
+    if (!review.author.equals(res.locals.localuser._id) && !res.locals.localuser.isAdmin) {
         req.flash("error", "You Can't Delete This Review");
         return res.redirect(`/listings/${id}`);
     }
+    
     next();
 };
+
+
+module.exports.isAdmin = (req, res, next) => {
+    if (req.isAuthenticated() && req.user.isAdmin) {
+        return next();
+    }
+    req.flash("error", "You do not have permission to access this page.");
+    res.redirect("/");
+};
+
+module.exports.adminLogout = (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        req.flash("done", "You have logged out successfully.");
+        res.redirect("/");
+    });
+};
+
+
+

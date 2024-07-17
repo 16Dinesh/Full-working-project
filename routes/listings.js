@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 const multer = require('multer');
-const {isLoggedIn , isOwner, validateListing} = require("../middleware.js");
+const {isLoggedIn , isOwnerOrAdmin, validateListing} = require("../middleware.js");
 const path = require("path");
 const listingController = require("../controller/listings.js")
 
@@ -37,26 +37,21 @@ function checkFileType(file, cb) {
 
 // Route's
 
-// Index 
-router.get("/", wrapAsync(listingController.index));
+//create and index
+router.route('/')
+        .get(wrapAsync(listingController.index))
+        .post(upload, validateListing, wrapAsync(listingController.createListing));
 
 // New 
-router.get("/new",isLoggedIn, listingController.renderNewForm);
+router.get("/new",isLoggedIn, listingController.renderNewForm);        
 
-// SHOW 
-router.get("/:id", wrapAsync(listingController.showListing));
-
-// Create 
-router.post("/", upload, validateListing, wrapAsync(listingController.createListing));
+// show, Update, delete 
+router.route('/:id')
+        .get(wrapAsync(listingController.showListing))
+        .put(isLoggedIn,isOwnerOrAdmin, upload, validateListing, wrapAsync(listingController.updateListing))
+        .delete(isLoggedIn,isOwnerOrAdmin, wrapAsync(listingController.destroyListing));
 
 // Edit  
-router.get("/:id/edit",isLoggedIn,isOwner, wrapAsync(listingController.renderEditForm));
-
-// Update 
-router.put("/:id",isLoggedIn,isOwner, upload, validateListing, wrapAsync(listingController.updateListing));
-
-
-// Delete 
-router.delete("/:id",isLoggedIn,isOwner, wrapAsync(listingController.destroyListing));
+router.get("/:id/edit",isLoggedIn,isOwnerOrAdmin, wrapAsync(listingController.renderEditForm));
 
 module.exports = router;
