@@ -22,12 +22,12 @@ module.exports.showListing = async (req, res) => {
 };
 
 module.exports.createListing = async (req, res, next) => {
+    const url = req.file.path;
+    const filename = req.file.filename;
+    //console.log(url, "..." , fileName)
     const newListing = new Listing(req.body.listing);
-
-    if (req.file) {
-        newListing.image = `/uploads/${req.file.filename}`;
-    }
     newListing.owner = req.user._id;
+    newListing.image = {url, filename}
     await newListing.save();
     req.flash("done", "New Listing Created")
     res.redirect("listings");
@@ -50,12 +50,6 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing }, { new: true });
-
-    if (req.file) {
-        listing.image = `/uploads/${req.file.filename}`;
-    } else if (!req.body.listing.image) {
-        listing.image = listing.schema.path('image').defaultValue;
-    }
 
     await listing.save();
     req.flash("done", "Listing Updated")
