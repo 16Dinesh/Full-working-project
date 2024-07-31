@@ -1,5 +1,5 @@
 <% layout("/layouts/boilerplate") -%>
-<div class="row mt-3">
+<div class="row mt-3 mb-3">
     <div class="col-8 offset-2"><br><br>
         <h3>Create a New Listing</h3>
         <form method="POST" action="/listings" enctype="multipart/form-data" novalidate class="needs-validation">
@@ -17,17 +17,26 @@
                     Invalid description
                 </div>
             </div>
-            <% if (localuser && localuser.isAdmin) { %>
-            <!-- Link upload -->
-            <!-- <div class="mb-3">
-                <label for="image" class="form-label">Image Link</label>
-                <input name="listing[image]" placeholder="Enter image URL/Link" type="text" class="form-control">
-            </div> -->
-            <% } %>
-            <!-- clould upload -->
             <div class="mb-3">
                 <label for="uploadImage" class="form-label">Upload Image</label>
                 <input type="file" name="listing[image]" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select name="listing[category]" class="form-select" required>
+                    <option selected disabled>Select a category</option>
+                    <option value="Home pools">Home pools</option>
+                    <option value="Town houses">Town houses</option>
+                    <option value="Workship">Workship</option>
+                    <option value="Arctic">Arctic</option>
+                    <option value="Igloo">Igloo</option>
+                    <option value="Camping">Camping</option>
+                    <option value="Icons">Icons</option>
+                    <option value="Mountains">Mountains</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select a category
+                </div>
             </div>
             <div class="row">
                 <div class="mb-3 col-md-4">
@@ -55,4 +64,4 @@
             <button class="btn btn-dark add-btn mt-3">Done</button>
         </form>
     </div>
-</div><br>
+</div>

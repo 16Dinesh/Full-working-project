@@ -32,7 +32,7 @@ module.exports.adminSignup = async (req, res) => {
                 return next(err);
             }
             req.flash("done", "Admin account created and logged in!");
-            res.redirect("/"); 
+            res.redirect("/listings"); 
         });
     } catch (err) {
         req.flash("error", err.message);
@@ -47,6 +47,6 @@ module.exports.adminLogout = (req, res, next) => {
             return next(err);
         }
         req.flash("done", "You have logged out successfully.");
-        res.redirect("/");
+        res.redirect("/listings");
     });
 };

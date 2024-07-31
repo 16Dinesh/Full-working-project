@@ -17,7 +17,7 @@ module.exports.userPost = async (req, res) => {
                 return next(err);
             }
             req.flash("done", "User Registered");
-            res.redirect("/");
+            res.redirect("/listings");
         });
     } catch (err) {
         req.flash("error", err.message);
@@ -31,7 +31,7 @@ module.exports.renderLoginForm = (req, res) => {
 
 module.exports.signupPost = async (req, res) => {
     req.flash("done", "Welcome back!");
-    let redirectUrl = res.locals.redirectUrl || "/"
+    let redirectUrl = res.locals.redirectUrl || "/listings"
     res.redirect(redirectUrl);
 }
 
@@ -41,6 +41,6 @@ module.exports.userLogout = (req, res, next) => {
             return next(err);
         }
         req.flash("done", "You are logged out!");
-        res.redirect("/");
+        res.redirect("/listings");
     });
 }

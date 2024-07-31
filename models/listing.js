@@ -44,6 +44,11 @@ const listingSchema = new Schema ({
           type: [Number],
           required: true
         }
+      },
+      category : {
+        type:String,
+        enum: ["Home pools",'Town houses','Workship' ,'Arctic', 'Igloo', 'Camping', "Icons", 'Mountains'],
+        required: true,
       }
     });
 

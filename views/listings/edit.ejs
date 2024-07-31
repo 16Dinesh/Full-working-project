@@ -17,28 +17,32 @@
                     Invalid description
                 </div>
             </div>
-
-            <!-- link upload -->
-            <!-- <div class="mb-3">
-                <label for="image" class="form-label">Image Link</label>
-                <input name="listing[image]" value="<%= //listing.image %>" type="text" class="form-control">
-                <div class="invalid-feedback">
-                    Invalid image Link
-                </div>
-            </div> -->
-
             <div class="mb-3">
                 <p>Existing Image</p>
                 <img src="<%= originalImageUrl %>"/>
-            </div>
-
-           
+            </div>        
             <!-- Cloud upload -->
             <div class="mb-3">
                 <label for="uploadImage" class="form-label">Update Image</label>
                 <input name="listing[image]" value="<%= listing.image.url || "uploadfile"  %>" type="file" class="form-control">
             </div>
-
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select name="listing[category]" class="form-select" required>
+                    <option disabled>Select a category</option>
+                    <option value="Home pools" <% if (listing.category === "Home pools") { %>selected<% } %>>Home pools</option>
+                    <option value="Town houses" <% if (listing.category === "Town houses") { %>selected<% } %>>Town houses</option>
+                    <option value="Workship" <% if (listing.category === "Workship") { %>selected<% } %>>Workship</option>
+                    <option value="Arctic" <% if (listing.category === "Arctic") { %>selected<% } %>>Arctic</option>
+                    <option value="Igloo" <% if (listing.category === "Igloo") { %>selected<% } %>>Igloo</option>
+                    <option value="Camping" <% if (listing.category === "Camping") { %>selected<% } %>>Camping</option>
+                    <option value="Icons" <% if (listing.category === "Icons") { %>selected<% } %>>Icons</option>
+                    <option value="Mountains" <% if (listing.category === "Mountains") { %>selected<% } %>>Mountains</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select a category
+                </div>
+            </div>
             <div class="row">
                 <div class="mb-3 col-md-4">
                     <label for="price" class="form-label">Price</label>

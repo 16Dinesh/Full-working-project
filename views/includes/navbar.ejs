@@ -1,24 +1,120 @@
+<style>
+    .btn-search {
+        background-color: #ff4652;
+        color: #ffffff;
+        border-radius: 25px;
+        padding: 0 1rem;
+    }
+    .btn-search:hover {
+        background-color: #ff4652;
+        color: #ffffff;
+    }
+
+    .btn-search i {
+        display: inline;
+        margin-right: 0.5rem;
+    }
+
+    .search-input {
+        border-radius: 25px;
+        padding: 0.5rem 3rem;
+        font-size: 1rem;
+    }
+    
+    
+    .search-dropdown {
+        display: none;
+        margin-top: 45px;
+        position: absolute;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        max-height: 200px;
+        overflow-y: auto;
+        width: 100%;
+        z-index: 1000;
+    }
+
+    .search-dropdown.show {
+    display: block; 
+}
+
+    .search-dropdown-item {
+        padding: 0.5rem;
+        cursor: pointer;
+    }
+
+    .search-dropdown-item:hover {
+        background-color: #f0f0f0;
+    }
+</style>
+
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
     <div class="container-fluid navbox">
-        <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i></a>
+        <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link" href="/">Home</a>
-                <a class="nav-link" href="/listings">All Listings</a>
-                <a class="nav-link" href="/listings/new">Add New Listing</a>
+                <a class="nav-link" href="/listings"><b>Explore</b></a>
+            </div>
+            <div class="navbar-nav ms-auto big-box">
+                <form class="d-flex position-relative" role="search">
+                    <input class="form-control me-2 search-input" type="search" placeholder="Search Destinations" id="searchInput">
+                    <div id="searchDropdown" class="search-dropdown"></div>
+                    <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+                </form>
             </div>
             <div class="navbar-nav ms-auto">
+                <a class="nav-link me-4" href="/listings/new">Add home</a>
                 <% if (localuser) { %>
-                    <b class="navbar-text me-4"><%= localuser.username %></b>
+                    <b class="navbar-text me-4"><i class="fa-solid fa-user fa-xl" style="color: #ff4652;"></i> <%= localuser.username %></b>
                     <a class="btn btn-danger" href="/logout">Logout</a>
                 <% } else { %>
-                    <a class="nav-link" href="/signup">Signup</a>
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link" href="/signup"><b>Signup</b></a>
+                    <a class="nav-link" href="/login"><b>Login</b></a>
                 <% } %>
             </div>
         </div>
     </div>
-  </nav>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('searchInput');
+        const searchDropdown = document.getElementById('searchDropdown');
+
+        searchInput.addEventListener('input', async () => {
+            const query = searchInput.value.trim();
+            if (!query) {
+                searchDropdown.classList.remove('show');
+                searchDropdown.innerHTML = '';
+                return;
+            }
+
+            const response = await fetch(`/listings/search?query=${query}`);
+            const results = await response.json();
+
+            if (results.length > 0) {
+                searchDropdown.classList.add('show'); 
+                searchDropdown.innerHTML = results.map(listing => `
+                    <div class="search-dropdown-item" onclick="location.href='/listings/${listing._id}'">
+                        <strong>${listing.title}</strong><br>
+                        <small>${listing.category}</small>
+                    </div>
+                `).join('');
+            } else {
+                searchDropdown.classList.add('show'); 
+                searchDropdown.innerHTML = '<div class="search-dropdown-item">No results found</div>';
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!searchDropdown.contains(event.target) && event.target !== searchInput) {
+                searchDropdown.classList.remove('show'); 
+                searchDropdown.innerHTML = '';
+            }
+        });
+    });
+</script>
