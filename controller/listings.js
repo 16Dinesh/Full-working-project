@@ -42,16 +42,22 @@ module.exports.renderEditForm = async (req, res) => {
         return res.redirect("/listings");
     }
     
-    // Pass the logged-in user and allowedUserId to the view
-    res.render("listings/edit.ejs", { listing, localuser: req.user });
+    let originalImageUrl = listing.image.url
+    originalImageUrl = originalImageUrl.replace("/upload", "/upload/h_300,w_250")
+    res.render("listings/edit.ejs", { listing, localuser: req.user, originalImageUrl });
 };
 
 
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing }, { new: true });
-
-    await listing.save();
+    
+    if(typeof req.file !=="undefined"){
+        const url = req.file.path;
+        const filename = req.file.filename;
+        listing.image = {url, filename}
+        await listing.save();
+    }
     req.flash("done", "Listing Updated")
     res.redirect(`/listings/${id}`);
 };

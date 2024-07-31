@@ -9,16 +9,19 @@
 
 > **Modules / Packages used**
 
-- BootStrap
 - Express
-- ejs
+- EJS
 - method-Override
 - EJS Mate
 - Joi
+- connect-flash
+- passport
+- multer
+- cloudinary Clould
 
 ---
 
-# Website Setup Instructions
+# Hotel Listing Website Setup Instructions
 
 ## Installation
 
@@ -32,3 +35,4 @@
 ## Viewing the Website
 
 1. Open your web browser and go to [http://localhost:8080/](http://localhost:8080/) to view the site.
+re

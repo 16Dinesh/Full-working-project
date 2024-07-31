@@ -26,11 +26,17 @@
                     Invalid image Link
                 </div>
             </div> -->
+
+            <div class="mb-3">
+                <p>Existing Image</p>
+                <img src="<%= originalImageUrl %>"/>
+            </div>
+
            
             <!-- Cloud upload -->
             <div class="mb-3">
-                <label for="uploadImage" class="form-label">Upload Image</label>
-                <input name="listing[image]" value="<%= listing.image.url || "ERROR"  %>" type="file" class="form-control">
+                <label for="uploadImage" class="form-label">Update Image</label>
+                <input name="listing[image]" value="<%= listing.image.url || "uploadfile"  %>" type="file" class="form-control">
             </div>
 
             <div class="row">
