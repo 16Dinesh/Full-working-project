@@ -136,3 +136,9 @@ footer {
     padding-left: 0;
     padding-right: 0;
 }
+
+/* map */
+#map { 
+    height:500px;
+    width: 1100px;
+ }
