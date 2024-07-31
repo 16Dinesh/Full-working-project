@@ -20,6 +20,4 @@ router.route("/admin/signup")
 // Admin logout
 router.get("/admin/logout", adminController.adminLogout);
 
-
-
 module.exports = router;

@@ -18,6 +18,7 @@
 - passport
 - multer
 - cloudinary Clould
+- MapBox
 
 ---
 
