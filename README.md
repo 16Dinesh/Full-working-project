@@ -56,6 +56,6 @@ Explore the live demo of the website [here](https://trek-to-do-listing-site.onre
 
 ### Viewing the Website
 
-1. Open your web browser and visit [http://localhost:8080/](http://localhost:8080/) to view the site.
+1. Open your web browser and visit [http://localhost:8080/listings](http://localhost:8080/listings) to view the site.
 
 ---
