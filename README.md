@@ -1,41 +1,61 @@
-## _Trek-To-DO_ Listing WebSite
+# Trek-To-DO Listing Website
 
-> **FrameWork & DataBase**
+## Framework & Database
 
-- Node
-- MongoDB
-
----
-
-> **Modules / Packages used**
-
-- Express
-- EJS
-- method-Override
-- EJS Mate
-- Joi
-- connect-flash
-- passport
-- multer
-- cloudinary Clould
-- MapBox
-- connect-mongo
-- Atlas
+- **Framework:** Node.js
+- **Database:** MongoDB
 
 ---
 
-# Hotel Listing Website Setup Instructions
+## Modules / Packages Used
 
-## Installation
+- **Express:** Web application framework for Node.js
+- **EJS:** Templating engine for rendering views
+- **method-Override:** Middleware to support HTTP method overrides
+- **EJS Mate:** Layouts and partials for EJS
+- **Joi:** Schema-based validation for data
+- **connect-flash:** Flash messaging for user notifications
+- **passport:** Authentication middleware
+- **multer:** Middleware for handling file uploads
+- **cloudinary:** Cloud storage service for image management
+- **MapBox:** Interactive maps integration
+- **connect-mongo:** MongoDB session store
+- **Atlas:** MongoDB cloud database
 
-1. First, navigate to your project directory in the terminal.
-2. Run `npm install` to download all required modules and packages.
+---
 
-## Running the Application
+## Demo Site
 
-1. After installation, execute `node app.js` in the terminal to start the server.
+Explore the live demo of the website [here](https://trek-to-do-listing-site.onrender.com/).
 
-## Viewing the Website
+---
 
-1. Open your web browser and go to [http://localhost:8080/](http://localhost:8080/) to view the site.
-re
+## Running the Website Locally
+
+### Installation
+
+1. Clone the repository:
+    ```bash
+    git clone <repository-url>
+    ```
+2. Navigate to your project directory:
+    ```bash
+    cd <project-directory>
+    ```
+3. Install dependencies:
+    ```bash
+    npm install
+    ```
+
+### Running the Application
+
+1. Start the server:
+    ```bash
+    node app.js
+    ```
+
+### Viewing the Website
+
+1. Open your web browser and visit [http://localhost:8080/](http://localhost:8080/) to view the site.
+
+---
