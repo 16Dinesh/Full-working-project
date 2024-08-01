@@ -19,6 +19,8 @@
 - multer
 - cloudinary Clould
 - MapBox
+- connect-mongo
+- Atlas
 
 ---
 
