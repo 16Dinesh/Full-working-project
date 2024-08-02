@@ -61,13 +61,13 @@ Explore the live demo of the website [here](https://trek-to-do-listing-site.onre
 
 1. **Create a `.env` file in the root directory and add your environment variables:**
     ```bash
-    CLOUD_NAME=<your-cloudinary-cloud-name>
-    CLOUD_API_KEY=<your-cloudinary-key>
-    CLOULD_API_SECRET=<your-cloudinary-secret>
-    MAP_TOKEN=<your-mapbox-token>
-    ADMIN_KEY=<admin-key>
-    ATLAS_DB_URL=<your-mongodb-atlas-url>
-    SESSION_SCRECT=<your-session-secret>
+    CLOUD_NAME=<your-cloudinary-cloud-name> // KEY
+    CLOUD_API_KEY=<your-cloudinary-key> // KEY
+    CLOULD_API_SECRET=<your-cloudinary-secret> // KEY
+    MAP_TOKEN=<your-mapbox-token> // KEY
+    ADMIN_KEY=<admin-key> //Any Secrect Text
+    ATLAS_DB_URL=<your-mongodb-atlas-url> // KEY
+    SESSION_SCRECT=<your-session-secret> //Any Secrect Text
     ```
 2. **OR you can go with Previous version**
 
