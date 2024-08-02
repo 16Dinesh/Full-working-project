@@ -1,10 +1,10 @@
 {
   "engines": {
-    "node": "22.x"
+    "node": "22.1.0"
   },
-  "name": "full-working-project",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "Trek-To-Do",
+  "version": "1.0.1",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
